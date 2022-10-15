@@ -3,7 +3,7 @@ from socket import socket, AF_INET, SOCK_STREAM, SOCK_DGRAM
 import struct
 import sys
 
-HOST = '8.8.8.8'
+DNS_SERVER = '8.8.8.8'
 PORT = 53
 DNS_RESPONSE_SIZE = 1024
 
@@ -105,7 +105,7 @@ def parse_response(response):
 
 def execute_dns_query(domain_name):
     with socket(AF_INET, SOCK_DGRAM) as s:
-        s.connect((HOST, PORT))
+        s.connect((DNS_SERVER, PORT))
         payload = create_msg(domain_name)
         s.sendall(payload)
         response = s.recv(DNS_RESPONSE_SIZE)
