@@ -16,6 +16,8 @@ FLAG_AA = 0b0000010000000000
 FLAG_TC = 0b0000001000000000
 FLAG_RD = 0b0000000100000000
 FLAG_RA = 0b0000000010000000
+TYPE_A = 0x01
+CLASS_IN = 0x01
 
 
 # This function converts a domain name(string) into a sequence of bytes in accordance
@@ -26,8 +28,7 @@ def translate_domain(name):
     for l in labels:
         res += struct.pack(f"!B {len(l)}s", len(l), l.encode())
     res += struct.pack("x")
-
-    res += struct.pack(f"!2h", 1, 1)
+    res += struct.pack(f"!2h", TYPE_A, CLASS_IN)
     return res
 
 
@@ -115,6 +116,7 @@ def execute_dns_query(domain_name):
 
 def usage():
     print(f"Usage: {sys.argv[0]} DOMAIN_NAME")
+
 
 def main(arguments):
     if len(sys.argv) < 2:
